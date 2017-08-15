@@ -55,6 +55,7 @@ class LeagueController {
         respond league, model:[scoresList: scores, daysList: days]
     }
 
+    @Secured('ROLE_USER')
     def create() {
         respond new League(params)
     }
@@ -64,6 +65,7 @@ class LeagueController {
 
     }
 
+    @Secured('ROLE_USER')
     @Transactional
     def save(League league) {
         if (league == null) {
@@ -88,7 +90,7 @@ class LeagueController {
 
             UserRole userRoleAdmin = UserRole.findByUserAndRole(admin, roleAdmin)
 
-            if (!userRoleAdmin) {
+            if (!userRoleAdmin && (admin.username == "LeSouss")) {
 
                 UserRole.findByUser(admin)?.delete(flush: true)
 

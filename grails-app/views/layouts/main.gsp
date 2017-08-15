@@ -43,6 +43,7 @@
     <g:layoutBody/>
 
     <div class="footer" role="contentinfo">
+    <g:link controller="logout" action="index" >Se déconnecter</g:link>
     </div>
 
     <div id="spinner" class="spinner" style="display:none;">

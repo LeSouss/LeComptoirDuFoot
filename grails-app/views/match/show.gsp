@@ -20,7 +20,7 @@
             </ul>
         </div>
         <div id="show-match" class="content scaffold-show" role="main">
-            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
+            <h1>${this.match}</h1>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
@@ -38,13 +38,13 @@
 
                             <td>
                                 <g:if test="${forecast.homeBet}">
-                                   ${forecast.match.home} (${forecast.match.homeQuote})
+                                   ${forecast.match.home} (<g:formatNumber number="${forecast.match.homeQuote}" type="number" minFractionDigits="2"/>)
                                 </g:if>
                                 <g:elseif test="${forecast.drawBet}">
-                                    N (${forecast.match.drawQuote})
+                                    N (<g:formatNumber number="${forecast.match.drawQuote}" type="number" minFractionDigits="2"/>)
                                 </g:elseif>
                                 <g:elseif test="${forecast.awayBet}">
-                                    ${forecast.match.away} (${forecast.match.awayQuote})
+                                    ${forecast.match.away} (<g:formatNumber number="${forecast.match.awayQuote}" type="number" minFractionDigits="2"/>)
                                 </g:elseif>
                             </td>
 
