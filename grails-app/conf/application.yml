@@ -119,8 +119,8 @@ environments:
         dataSource:
             dbCreate: create
             url: ${HEROKU_POSTGRESQL_BLUE_JDBC_URL}
-            username: ${HEROKU_POSTGRESQL_BLUE_USERNAME}
-            password: ${HEROKU_POSTGRESQL_BLUE_PASSWORD}
+            username: ${HEROKU_POSTGRESQL_BLUE_JDBC_USERNAME}
+            password: ${HEROKU_POSTGRESQL_BLUE_JDBC_PASSWORD}
 
 grails:
   gorm:
