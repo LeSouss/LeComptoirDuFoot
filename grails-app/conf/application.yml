@@ -118,7 +118,7 @@ environments:
     production:
         dataSource:
             dbCreate: create
-            url: jdbc:postgres://vkngfoonavlmdr:0ffe67fff542dbb92e46aeb7741f4dac3b23493478e6cb6a4f2a67d664a93034@ec2-107-22-211-182.compute-1.amazonaws.com:5432/d26nn8373u52he:5432/LeComptoirDuFootDB
+            url: jdbc:postgres://vkngfoonavlmdr:0ffe67fff542dbb92e46aeb7741f4dac3b23493478e6cb6a4f2a67d664a93034@ec2-107-22-211-182.compute-1.amazonaws.com:5432/d26nn8373u52he:5432/d26nn8373u52he
             username: vkngfoonavlmdr
             password: 0ffe67fff542dbb92e46aeb7741f4dac3b23493478e6cb6a4f2a67d664a93034
             properties:
