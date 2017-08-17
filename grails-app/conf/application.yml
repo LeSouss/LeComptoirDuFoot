@@ -112,15 +112,15 @@ environments:
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:postgresql://localhost:5432/LeComptoirDuFootDB
             username: lcdf
             password: lcdf
     production:
         dataSource:
             dbCreate: create
-            url: jdbc:postgres://vkngfoonavlmdr:0ffe67fff542dbb92e46aeb7741f4dac3b23493478e6cb6a4f2a67d664a93034@ec2-107-22-211-182.compute-1.amazonaws.com:5432/d26nn8373u52he:5432/d26nn8373u52he
-            username: vkngfoonavlmdr
-            password: 0ffe67fff542dbb92e46aeb7741f4dac3b23493478e6cb6a4f2a67d664a93034
+            url: ${JDBC_DATABASE_URL}
+            username: ${JDBC_DATABASE_USERNAME}
+            password: ${JDBC_DATABASE_PASSWORD}
             properties:
                 jmxEnabled: true
                 initialSize: 5
