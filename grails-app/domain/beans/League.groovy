@@ -17,6 +17,8 @@ class League {
     }
 
     static mapping = {
+        table "league_domain"
+        id column: "league_id"
         users lazy: false
         days lazy: false
     }

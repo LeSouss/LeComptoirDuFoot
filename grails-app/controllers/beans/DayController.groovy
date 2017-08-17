@@ -18,9 +18,9 @@ class DayController {
     @Secured('ROLE_USER')
     def show(Day day) {
 
-        List<Match> matchsLsit = day?.matchs?.sort { it.date }
+        List<Match> matchsList = day?.matchs?.sort { a, b -> a.date <=> b.date ?: a.toString() <=> b.toString() }
 
-        respond day, model:[matchsList: matchsLsit]
+        respond day, model:[matchsList: matchsList]
     }
 
     def create() {

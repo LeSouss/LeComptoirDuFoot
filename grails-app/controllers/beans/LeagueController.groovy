@@ -195,7 +195,7 @@ class LeagueController {
             Score score = Score.findByUserAndLeague(user, league) ?: Score.create(user, league)
             score.save(flush: true)
 
-            render(view: "show", model: [league: league, scoresList: Score.findAllByLeague(league)?.sort { it.points }, daysList: league?.days])
+            render(view: "show", model: [league: league, scoresList: Score.findAllByLeague(league)?.sort { a, b -> a.points <=> b.points ?: a.user.username <=> b.user.username }, daysList: league?.days?.sort { it.name }])
 
         } else {
 

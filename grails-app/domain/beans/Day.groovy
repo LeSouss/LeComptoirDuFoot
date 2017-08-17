@@ -12,6 +12,8 @@ class Day {
     }
 
     static mapping = {
+        table "day_domain"
+        id column: "day_id"
         league lazy: false
         matchs lazy: false
     }

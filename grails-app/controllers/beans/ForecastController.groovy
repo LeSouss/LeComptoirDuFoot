@@ -42,7 +42,7 @@ class ForecastController {
             }
         }
 
-        List<Forecast> forecastsList = Forecast?.findAllByUser(user)?.sort { it?.match?.date }
+        List<Forecast> forecastsList = params.dayId ? Forecast?.findAllByUserAndMatchInList(user, Match.findAllByDay(Day.findById(params.dayId)))?.sort { a, b -> a?.match?.date <=> b?.match?.date ?: a?.match?.toString() <=> b?.match?.toString() } : Forecast?.findAllByUser(user)?.sort { a, b -> a?.match?.date <=> b?.match?.date ?: a?.match?.toString() <=> b?.match?.toString() }
 
         respond forecastsList, model:[forecastCount: forecastsList?.size(), dayId: params?.dayId]
     }

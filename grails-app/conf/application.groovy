@@ -26,6 +26,10 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 	[pattern: '/**',             filters: 'JOINED_FILTERS']
 ]
 
+grails.gorm.default.mapping = {
+	id generator: 'org.hibernate.id.enhanced.SequenceStyleGenerator', params: [prefer_sequence_per_entity: true]
+}
+
 grails.plugin.springsecurity.logout.postOnly = false
 
 grails.plugin.springsecurity.roleHierarchy = '''

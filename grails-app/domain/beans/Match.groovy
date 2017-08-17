@@ -22,6 +22,8 @@ class Match {
     }
 
     static mapping = {
+        table "match_domain"
+        id column: "match_id"
         home lazy: false
         away lazy: false
         forecasts lazy: false

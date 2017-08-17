@@ -18,6 +18,8 @@ class Score {
     }
 
     static mapping = {
+        table "score_domain"
+        id column: "score_id"
         league lazy: false
         user lazy: false
     }
