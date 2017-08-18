@@ -118,7 +118,7 @@ environments:
             password: lcdf
     production:
         dataSource:
-            dbCreate: create
+            dbCreate: update
             url: ${HEROKU_POSTGRESQL_BLUE_JDBC_URL}
             username: ${HEROKU_POSTGRESQL_BLUE_JDBC_USERNAME}
             password: ${HEROKU_POSTGRESQL_BLUE_JDBC_PASSWORD}
