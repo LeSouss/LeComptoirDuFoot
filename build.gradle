@@ -10,7 +10,7 @@ buildscript {
     }
 }
 
-version "1.0"
+version "1.1"
 group "lecomptoirdufoot"
 
 apply plugin:"eclipse"
@@ -63,3 +63,13 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/lib"
+    from(configurations.compile)
+}
+
+stage.dependsOn(copyToLib)

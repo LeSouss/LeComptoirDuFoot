@@ -126,7 +126,7 @@ class ForecastController {
             request.withFormat {
                 form multipartForm {
                     flash.message = "Impossible de mettre à jour le pronostic pour le macth ${forecast.match}"
-                    redirect(action: "index", method:"GET")
+                    redirect(action: "index", method:"GET", params: [dayId: forecast?.match?.day?.id])
                 }
                 '*'{ respond forecast, [status: OK] }
             }
