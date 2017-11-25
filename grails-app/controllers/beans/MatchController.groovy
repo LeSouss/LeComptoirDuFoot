@@ -131,4 +131,89 @@ class MatchController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    @Transactional
+    def updateHome(Match match){
+
+        if (match) {
+            match.homeResult = Boolean.TRUE
+            match.drawResult = Boolean.FALSE
+            match.awayResult = Boolean.FALSE
+            match.status = "FINISHED"
+
+            match.save(flush: true)
+
+            User user = springSecurityService?.currentUser
+
+            List<Forecast> forecasts = new ArrayList<Forecast>()
+
+            if ((match.date <= new Date()) && ((match.status == "STARTED") || (match.status == "FINISHED"))) {
+                forecasts = Forecast.findAllByMatch(match)?.sort { it -> it.user.username }
+            } else {
+                Forecast forecast = Forecast.findByUserAndMatch(user, match)
+                if (forecast) [
+                        forecasts.add(forecast)
+                ]
+            }
+
+            render(view: "show", model: [match: match, forecastsList:forecasts])
+        }
+
+    }
+
+    @Transactional
+    def updateDraw(Match match){
+
+        if (match) {
+            match.homeResult = Boolean.FALSE
+            match.drawResult = Boolean.TRUE
+            match.awayResult = Boolean.FALSE
+            match.status = "FINISHED"
+
+            match.save(flush: true)
+
+            User user = springSecurityService?.currentUser
+
+            List<Forecast> forecasts = new ArrayList<Forecast>()
+
+            if ((match.date <= new Date()) && ((match.status == "STARTED") || (match.status == "FINISHED"))) {
+                forecasts = Forecast.findAllByMatch(match)?.sort { it -> it.user.username }
+            } else {
+                Forecast forecast = Forecast.findByUserAndMatch(user, match)
+                if (forecast) [
+                        forecasts.add(forecast)
+                ]
+            }
+
+            render(view: "show", model: [match: match, forecastsList:forecasts])
+        }
+    }
+
+    @Transactional
+    def updateAway(Match match){
+
+        if (match) {
+            match.homeResult = Boolean.FALSE
+            match.drawResult = Boolean.FALSE
+            match.awayResult = Boolean.TRUE
+            match.status = "FINISHED"
+
+            match.save(flush: true)
+
+            User user = springSecurityService?.currentUser
+
+            List<Forecast> forecasts = new ArrayList<Forecast>()
+
+            if ((match.date <= new Date()) && ((match.status == "STARTED") || (match.status == "FINISHED"))) {
+                forecasts = Forecast.findAllByMatch(match)?.sort { it -> it.user.username }
+            } else {
+                Forecast forecast = Forecast.findByUserAndMatch(user, match)
+                if (forecast) [
+                        forecasts.add(forecast)
+                ]
+            }
+
+            render(view: "show", model: [match: match, forecastsList:forecasts])
+        }
+    }
 }

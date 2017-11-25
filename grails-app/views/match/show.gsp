@@ -64,6 +64,9 @@
                     <fieldset class="buttons">
                         <g:link class="edit" action="edit" resource="${this.match}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                         <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                        <g:link class="edit" action="updateHome" resource="${this.match}"><g:message code="default.button.update.home.label" default="Update Home" /></g:link>
+                        <g:link class="edit" action="updateDraw" resource="${this.match}"><g:message code="default.button.update.draw.label" default="Update Draw" /></g:link>
+                        <g:link class="edit" action="updateAway" resource="${this.match}"><g:message code="default.button.update.away.label" default="Update Away" /></g:link>
                     </fieldset>
                 </g:form>
             </sec:access>
