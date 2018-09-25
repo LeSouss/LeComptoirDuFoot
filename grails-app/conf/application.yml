@@ -118,10 +118,10 @@ environments:
             password: lcdf
     production:
         dataSource:
-            dbCreate: create
-            url: ${SPRING_DATABASE_URL}
-            username: ${SPRING_DATABASE_USERNAME}
-            password: ${SPRING_DATABASE_PASSWORD}
+            dbCreate: update
+            url: jdbc:${DATABASE_URL}
+            username: ${JDBC_DATABASE_USERNAME}
+            password: ${JDBC_DATABASE_PASSWORD}
 
 grails:
   gorm:
