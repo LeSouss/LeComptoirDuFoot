@@ -119,9 +119,9 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: ${DATABASE_URL}
-            username: ${DATABASE_USERNAME}
-            password: ${DATABASE_PASSWORD}
+            url: ${JDBC_DATABASE_URL}
+            username: ${JDBC_DATABASE_USERNAME}
+            password: ${JDBC_DATABASE_PASSWORD}
 
 grails:
   gorm:
