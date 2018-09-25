@@ -118,7 +118,7 @@ environments:
             password: lcdf
     production:
         dataSource:
-            dbCreate: update
+            dbCreate: create
             url: ${DATABASE_JDBC_URL}
             username: ${DATABASE_JDBC_USERNAME}
             password: ${DATABASE_JDBC_PASSWORD}
