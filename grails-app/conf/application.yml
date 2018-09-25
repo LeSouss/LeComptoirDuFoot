@@ -118,10 +118,10 @@ environments:
             password: lcdf
     production:
         dataSource:
-            dbCreate: create
-            url: ${DATABASE_JDBC_URL}
-            username: ${DATABASE_JDBC_USERNAME}
-            password: ${DATABASE_JDBC_PASSWORD}
+            dbCreate: update
+            url: ${DATABASE_URL}
+            username: ${DATABASE_USERNAME}
+            password: ${DATABASE_PASSWORD}
 
 grails:
   gorm:
