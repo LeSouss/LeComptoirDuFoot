@@ -119,9 +119,7 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: ${HEROKU_POSTGRESQL_RED_JDBC_URL}
-            username: ${HEROKU_POSTGRESQL_RED_JDBC_USERNAME}
-            password: ${HEROKU_POSTGRESQL_RED_JDBC_PASSWORD}
+            url: ${JDBC_DATABASE_URL}
 
 grails:
   gorm:
