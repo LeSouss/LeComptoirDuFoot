@@ -29,8 +29,6 @@
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
-
-
             <g:if test="${this.scoresList}">
                 <table>
                     <tr>
@@ -40,13 +38,28 @@
                     <g:each var="score" in="${this.scoresList}">
                         <tr>
                             <td>${score.user}</td>
-                            <td><g:formatNumber number="${score.points}" type="number" minFractionDigits="2"/></td>
+                            <td><g:formatNumber number="${score.points}" type="number"/></td>
                         </tr>
                     </g:each>
                 </table>
             </g:if>
 
-            <f:table collection="${this.daysList}" properties="['name']" />
+            <g:if test="${this.daysList}">
+                <table>
+                    <tr>
+                        <th>Journées</th>
+                        <th>Points</th>
+                        <th>Points Bonus</th>
+                    </tr>
+                    <g:each var="day" in="${this.daysList}">
+                        <tr>
+                            <td><g:link class="edit" action="show" resource="${day}">${day?.name} ${day?.dayNumber}</g:link></td>
+                            <td><g:formatNumber number="${dayScoresMap?.get(day?.dayNumber)?.points}" type="number"/> / 10</td>
+                            <td>+ <g:formatNumber number="${dayScoresMap?.get(day?.dayNumber)?.bonusPoints}" type="number"/></td>
+                        </tr>
+                    </g:each>
+                </table>
+            </g:if>
 
             <sec:access expression="hasRole('ROLE_ADMIN')">
                 <g:form resource="${this.league}" method="DELETE">

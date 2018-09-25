@@ -21,6 +21,26 @@
 
             </ul>
         </div>
+        <div id="list-bonus" class="content scaffold-list" role="main">
+            <h1>Bonus</h1>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Match</th>
+                </tr>
+                <g:each var="bonus" in="${this.bonusesList}">
+                    <tr>
+                        <td>${bonus?.type}</td>
+                        <td>${bonus?.forecast?.match}</td>
+                    </tr>
+                </g:each>
+            </table>
+
+            <div class="pagination">
+                <g:paginate total="${bonus?.size() ?: 0}" />
+            </div>
+        </div>
+
         <div id="list-forecast" class="content scaffold-list" role="main">
             <h1>Pronos</h1>
             <g:if test="${flash.message}">
@@ -31,7 +51,6 @@
                     <th>Heure</th>
                     <th>Match</th>
                     <th>Pronostic - 1/N/2</th>
-                    <th>Bonus</th>
                     <th></th>
                 </tr>
                 <g:each var="forecast" in="${this.forecastList}">
@@ -46,25 +65,21 @@
                                 <div class="ck-button">
                                     <label>
                                         <g:checkBox name="homeBet" value="${forecast.homeBet}"/>
-                                        <span><g:formatNumber number="${forecast.match.homeQuote}" type="number" minFractionDigits="2"/></span>
+                                        <span>1</span>
                                     </label>
                                 </div>
                                 <div class="ck-button">
                                     <label>
                                         <g:checkBox name="drawBet" value="${forecast.drawBet}"/>
-                                        <span><g:formatNumber number="${forecast.match.drawQuote}" type="number" minFractionDigits="2"/></span>
+                                        <span>N</span>
                                     </label>
                                 </div>
                                 <div class="ck-button">
                                     <label>
                                         <g:checkBox name="awayBet" value="${forecast.awayBet}"/>
-                                        <span><g:formatNumber number="${forecast.match.awayQuote}" type="number" minFractionDigits="2"/></span>
+                                        <span>2</span>
                                     </label>
                                 </div>
-                            </td>
-                            <td>
-                                <g:checkBox name="isDouble" value="${forecast.isDouble}"/>
-                                <label for="isDouble">X2</label>
                             </td>
                             <!-- Add dans un fieldset pour envoie au controller + form -->
                             <td>

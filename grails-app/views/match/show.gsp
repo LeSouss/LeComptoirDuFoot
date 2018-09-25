@@ -38,20 +38,18 @@
 
                             <td>
                                 <g:if test="${forecast.homeBet}">
-                                   ${forecast.match.home} (<g:formatNumber number="${forecast.match.homeQuote}" type="number" minFractionDigits="2"/>)
+                                   ${forecast.match.home}
                                 </g:if>
-                                <g:elseif test="${forecast.drawBet}">
-                                    N (<g:formatNumber number="${forecast.match.drawQuote}" type="number" minFractionDigits="2"/>)
-                                </g:elseif>
-                                <g:elseif test="${forecast.awayBet}">
-                                    ${forecast.match.away} (<g:formatNumber number="${forecast.match.awayQuote}" type="number" minFractionDigits="2"/>)
-                                </g:elseif>
+                                <g:if test="${forecast.drawBet}">
+                                    N
+                                </g:if>
+                                <g:if test="${forecast.awayBet}">
+                                    ${forecast.match.away}
+                                </g:if>
                             </td>
 
                             <td>
-                                <g:if test="${forecast.isDouble}">
-                                    X2
-                                </g:if>
+                                ${forecast.toStringMultiple()}
                             </td>
 
                         </tr>

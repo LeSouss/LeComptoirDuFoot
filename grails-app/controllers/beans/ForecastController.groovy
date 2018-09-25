@@ -7,10 +7,13 @@ import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('ROLE_ADMIN')
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class ForecastController {
 
     def springSecurityService
+    def forecastService
+    def bonusService
+    def dayScoreService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -20,6 +23,8 @@ class ForecastController {
         params.max = Math.min(max ?: 10, 100)
 
         User user = springSecurityService?.currentUser
+
+        List<Bonus> bonusesList = new ArrayList<>()
 
         if (params.dayId){
 
@@ -39,12 +44,18 @@ class ForecastController {
 
                 }
 
+                dayScoreService.generateDayScoreBonus(user, day)
+
+                bonusService.generateBonus(user, day)
+
+                bonusesList = Bonus.findAllByUserAndDay(user, day)?.sort { it.type }
+
             }
         }
 
         List<Forecast> forecastsList = params.dayId ? Forecast?.findAllByUserAndMatchInList(user, Match.findAllByDay(Day.findById(params.dayId)))?.sort { a, b -> a?.match?.date <=> b?.match?.date ?: a?.match?.toString() <=> b?.match?.toString() } : Forecast?.findAllByUser(user)?.sort { a, b -> a?.match?.date <=> b?.match?.date ?: a?.match?.toString() <=> b?.match?.toString() }
 
-        respond forecastsList, model:[forecastCount: forecastsList?.size(), dayId: params?.dayId]
+        respond forecastsList, model:[forecastCount: forecastsList?.size(), dayId: params?.dayId, bonusesList: bonusesList]
     }
 
     def show(Forecast forecast) {
@@ -96,26 +107,20 @@ class ForecastController {
     def update(Forecast forecast) {
 
         if (forecast == null) {
-            transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
         if (forecast.hasErrors()) {
-            transactionStatus.setRollbackOnly()
             respond forecast.errors, view:'edit'
             return
         }
 
-        if (verifyForecast(forecast)) {
-
-            forecast.save flush:true
-
-            Float quote = getQuote(forecast)
+        if (forecastService?.verifyForecast(forecast)) {
 
             request.withFormat {
                 form multipartForm {
-                    flash.message = message(code: 'default.updated.message', args: [message(code: 'forecast.label', default: "${forecast.match}"), "(${quote})"])
+                    flash.message = message(code: 'default.updated.message', args: [message(code: 'forecast.label', default: "${forecast.match}"), "-"])
                     redirect(action: "index", method:"GET", params: [dayId: forecast?.match?.day?.id])
                 }
                 '*'{ respond forecast, [status: OK] }
@@ -131,7 +136,6 @@ class ForecastController {
                 '*'{ respond forecast, [status: OK] }
             }
         }
-
 
     }
 
@@ -163,62 +167,6 @@ class ForecastController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-    Float getQuote (Forecast forecast) {
-
-        Float quote
-
-        if (forecast.homeBet) {
-            quote = forecast.match.homeQuote
-        } else if (forecast.drawBet) {
-            quote = forecast.match.drawQuote
-        } else if (forecast.awayBet) {
-            quote = forecast.match.awayQuote
-        } else {
-            quote = 0
-        }
-
-        return quote
-
-    }
-
-    Boolean verifyForecast (Forecast forecast) {
-
-        return checkQuote(forecast) && checkDouble(forecast) && checkDate(forecast)
-
-    }
-
-    Boolean checkQuote (Forecast forecast) {
-
-        return (forecast.homeBet && !forecast.drawBet && !forecast.awayBet) ||
-                (!forecast.homeBet && forecast.drawBet && !forecast.awayBet) ||
-                (!forecast.homeBet && !forecast.drawBet && forecast.awayBet) ||
-                (!forecast.homeBet && !forecast.drawBet && !forecast.awayBet)
-
-    }
-
-    Boolean checkDouble (Forecast forecast) {
-
-        Integer count = 0
-        User user = springSecurityService?.currentUser
-
-        forecast.match.day.matchs.each { it ->
-
-            if (Forecast.findByUserAndMatch(user, it).isDouble) {
-                count ++
-            }
-
-        }
-
-        return (count <= 1)
-
-    }
-
-    Boolean checkDate (Forecast forecast) {
-
-        return (forecast?.match?.date >= new Date())
-
     }
 
 }

@@ -13,6 +13,7 @@ class MatchController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def springSecurityService
+    def dayScoreService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -143,6 +144,8 @@ class MatchController {
 
             match.save(flush: true)
 
+            dayScoreService.update(match)
+
             User user = springSecurityService?.currentUser
 
             List<Forecast> forecasts = new ArrayList<Forecast>()
@@ -172,6 +175,8 @@ class MatchController {
 
             match.save(flush: true)
 
+            dayScoreService.update(match)
+
             User user = springSecurityService?.currentUser
 
             List<Forecast> forecasts = new ArrayList<Forecast>()
@@ -199,6 +204,8 @@ class MatchController {
             match.status = "FINISHED"
 
             match.save(flush: true)
+
+            dayScoreService.update(match)
 
             User user = springSecurityService?.currentUser
 

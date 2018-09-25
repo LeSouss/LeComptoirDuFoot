@@ -2,13 +2,15 @@ package beans
 
 class Day {
 
-    String name
+    String name = "Journée"
+    Integer dayNumber
 
     static hasOne = [league: League]
     static hasMany = [matchs: Match]
 
     static constraints = {
-        name blank: false, unique: true
+        name blank: false
+        dayNumber nullable: false
     }
 
     static mapping = {
@@ -19,6 +21,6 @@ class Day {
     }
 
     String toString() {
-        "${this.name}"
+        "${this.name} ${this.dayNumber}"
     }
 }

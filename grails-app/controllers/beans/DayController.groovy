@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured('ROLE_ADMIN')
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class DayController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", start: "PUT"]

@@ -13,6 +13,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class LeagueController {
 
     def springSecurityService
+    def leagueService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", UpdateScore:"PUT"]
 
@@ -49,10 +50,23 @@ class LeagueController {
 
         }
 
-        scores.each { it -> it.save(flush: true)}
-        List<Day> days = league?.days?.sort { it.name }
+        List<Day> days = league?.days?.sort { a, b ->
+            if (a.dayNumber < b.dayNumber){
+                1
+            } else if (a.dayNumber > b.dayNumber) {
+                -1
+            } else {
+                0
+            }
+        }
 
-        respond league, model:[scoresList: scores, daysList: days]
+        User user = springSecurityService?.currentUser
+        Map<Integer, DayScore> dayScoresMap = new HashMap<Integer, DayScore>()
+        days?.each { it ->
+            dayScoresMap.put(it.dayNumber, DayScore.findByUserAndDay(user, it))
+        }
+
+        respond league, model:[scoresList: scores, daysList: days, dayScoresMap: dayScoresMap]
     }
 
     @Secured('ROLE_USER')
@@ -195,7 +209,22 @@ class LeagueController {
             Score score = Score.findByUserAndLeague(user, league) ?: Score.create(user, league)
             score.save(flush: true)
 
-            render(view: "show", model: [league: league, scoresList: Score.findAllByLeague(league)?.sort { a, b -> a.points <=> b.points ?: a.user.username <=> b.user.username }, daysList: league?.days?.sort { it.name }])
+            List<Score> scoresList = Score.findAllByLeague(league)?.sort { a, b -> a.points <=> b.points ?: a.user.username <=> b.user.username }
+            List<Day> daysList = league?.days?.sort { a, b ->
+                if (a.dayNumber < b.dayNumber){
+                    1
+                } else if (a.dayNumber > b.dayNumber) {
+                    -1
+                } else {
+                    0
+                }
+            }
+            Map<Integer, DayScore> dayScoresMap = new HashMap<Integer, DayScore>()
+            daysList?.each { it ->
+                dayScoresMap.put(it.dayNumber, DayScore.findByUserAndDay(user, it))
+            }
+
+            render(view: "show", model: [league: league, scoresList: scoresList, daysList: daysList, dayScoresMap: dayScoresMap])
 
         } else {
 
@@ -213,56 +242,9 @@ class LeagueController {
 
     }
 
-    @Transactional
     def UpdateScore(League league) {
 
-        Score.findAllByLeague(league)?.each { s ->
-            //it.user
-
-            Float points = 0
-
-            Match.findAllByDayInListAndStatus(league?.days?.toList(), "FINISHED").each { m ->
-
-                Forecast.findAllByMatchAndUser(m, s.user)?.each { f ->
-
-                    //if resultat = pari
-                    // alors points += cote
-                    if (f.homeBet && m.homeResult) {
-
-                        if (f.isDouble) {
-                            points += (m.homeQuote * 2)
-                        } else {
-                            points += m.homeQuote
-                        }
-
-                    } else if (f.drawBet && m.drawResult) {
-
-                        if (f.isDouble) {
-                            points += (m.drawQuote * 2)
-                        } else {
-                            points += m.drawQuote
-                        }
-
-                    } else if (f.awayBet && m.awayResult) {
-
-                        if (f.isDouble) {
-                            points += (m.awayQuote * 2)
-                        } else {
-                            points += m.awayQuote
-                        }
-
-                    } else {
-                        points += 0
-                    }
-
-                }
-
-            }
-
-            s.points = points
-
-            s.save(flush: true)
-        }
+        leagueService.updateScores(league)
 
         redirect league
 
