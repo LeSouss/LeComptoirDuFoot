@@ -119,7 +119,10 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: ${JDBC_DATABASE_URL}
+            url: jdbc:postgresql://ec2-54-83-29-34.compute-1.amazonaws.com:5432/dcp2klb4226ojj
+            username: ucbeuugfcgxujp
+            password: 3a530bebe7f1ce16c3ced6c883d44ea77434fca130b7b2cb43f5c7c37236b7d7
+
 
 grails:
   gorm:
