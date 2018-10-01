@@ -96,25 +96,6 @@ class LeagueController {
 
         User admin = springSecurityService?.currentUser
 
-        if (admin) {
-
-            Role roleAdmin = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN')
-
-            roleAdmin.save(flush: true)
-
-            UserRole userRoleAdmin = UserRole.findByUserAndRole(admin, roleAdmin)
-
-            if (!userRoleAdmin && (admin.username == "LeSouss")) {
-
-                UserRole.findByUser(admin)?.delete(flush: true)
-
-                UserRole.create(admin, roleAdmin).save(flush: true)
-
-                springSecurityService.reauthenticate admin.username
-            }
-
-        }
-
         admin.addToLeagues(league).save(flush: true)
         league.addToUsers(admin).save(flush: true)
 
