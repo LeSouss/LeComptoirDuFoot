@@ -110,7 +110,7 @@ class ForecastService {
         Day day = forecast?.match?.day
 
         Bonus matchBonus = Bonus.findByUserAndForecastAndDay(user, forecast, day)
-        Bonus doubleBonus = Bonus.findByUserAndForecastAndDay(user, null, day)
+        Bonus doubleBonus = Bonus.findByUserAndForecastAndDayAndType(user, null, day, "Double")
 
         if (matchBonus) {
 
@@ -188,7 +188,7 @@ class ForecastService {
         Day day = forecast?.match?.day
 
         Bonus matchBonus = Bonus.findByUserAndForecastAndDay(user, forecast, day)
-        Bonus tripleBonus = Bonus.findByUserAndForecastAndDay(user, null, day)
+        Bonus tripleBonus = Bonus.findByUserAndForecastAndDayAndType(user, null, day, "Triple")
 
         if (matchBonus) {
 
