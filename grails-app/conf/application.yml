@@ -106,7 +106,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create-drop
+            dbCreate: update
             url: jdbc:postgresql://localhost:5433/LeComptoirDuFootDB
             username: lcdf
             password: lcdf

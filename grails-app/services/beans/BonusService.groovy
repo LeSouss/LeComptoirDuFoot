@@ -14,7 +14,7 @@ class BonusService {
             DayScore dayScore = DayScore.findByUserAndDay(user, previousDay)
 
             if (dayScore) {
-                switch (dayScore?.points?.intValue()) {
+                switch (dayScore?.nbMatchsOk) {
                     case 7 :
                         new Bonus(user: user, day: day, type: "Double").save(flush: true)
                         break

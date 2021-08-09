@@ -29,7 +29,7 @@
             <g:form resource="${this.match}" method="PUT">
                 <g:hiddenField name="version" value="${this.match?.version}" />
                 <fieldset class="form">
-                    <f:all bean="match" order="status,home,away,homeResult,drawResult,awayResult,day"/>
+                    <f:all bean="match" order="status,day,home,away,homeQuote,drawQuote,awayQuote,homeResult,drawResult,awayResult"/>
                     <div class="fieldcontain">
                         <label for="date">Date</label>
                         <g:datePicker name="date" value="${this.match.date}"/>

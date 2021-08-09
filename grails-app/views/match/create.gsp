@@ -27,7 +27,7 @@
             </g:hasErrors>
             <g:form resource="${this.match}" method="POST">
                 <fieldset class="form">
-                    <f:all bean="match"  order="status,home,away,day" />
+                    <f:all bean="match"  order="status,day,home,away,homeQuote,drawQuote,awayQuote" />
                     <div class="fieldcontain">
                         <label for="date">Date</label>
                         <g:datePicker name="date" value="${this.match.date}"/>

@@ -12,7 +12,8 @@ class LeagueService {
             Float points = 0
 
             DayScore.findAllByUser(it)?.each {dayScore ->
-                points = points + dayScore.points + dayScore.bonusPoints
+                //points = points + dayScore.points + dayScore.bonusPoints
+                points = points + dayScore.points
             }
 
             Score score = Score.findByUserAndLeague(it, league)

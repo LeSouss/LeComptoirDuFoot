@@ -22,12 +22,24 @@ class DayScoreService {
 
         winningForecasts?.each {it ->
             DayScore dayScore = DayScore.findByUserAndDay(it.user, it.match.day)
-            dayScore.points ++
+            //dayScore.points ++
 
+            /*
             if (winningForecasts?.size() < 3) {
                 dayScore.bonusPoints ++
             }
+             */
+            Float score
+            if (it.awayBet) {
+                score = it.match.awayQuote
+            } else if (it.drawBet){
+                score = it.match.drawQuote
+            } else {
+                score = it.match.homeQuote
+            }
 
+            dayScore.nbMatchsOk ++
+            dayScore.points = dayScore.points + score
             dayScore.save(flush: true)
             it.isUpdated = Boolean.TRUE
             it.save(flush: true)

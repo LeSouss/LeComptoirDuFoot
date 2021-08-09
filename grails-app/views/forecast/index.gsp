@@ -65,19 +65,19 @@
                                 <div class="ck-button">
                                     <label>
                                         <g:checkBox name="homeBet" value="${forecast.homeBet}"/>
-                                        <span>1</span>
+                                        <span>${forecast.match.homeQuote}</span>
                                     </label>
                                 </div>
                                 <div class="ck-button">
                                     <label>
                                         <g:checkBox name="drawBet" value="${forecast.drawBet}"/>
-                                        <span>N</span>
+                                        <span>${forecast.match.drawQuote}</span>
                                     </label>
                                 </div>
                                 <div class="ck-button">
                                     <label>
                                         <g:checkBox name="awayBet" value="${forecast.awayBet}"/>
-                                        <span>2</span>
+                                        <span>${forecast.match.awayQuote}</span>
                                     </label>
                                 </div>
                             </td>

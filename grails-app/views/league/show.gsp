@@ -29,6 +29,12 @@
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
+            <div class="svg" role="presentation">
+                <div class="grails-logo-container">
+                    <asset:image src="Podium.png" class="grails-logo"/>
+                </div>
+            </div>
+
             <g:if test="${this.scoresList}">
                 <table>
                     <tr>
@@ -49,13 +55,11 @@
                     <tr>
                         <th>Journées</th>
                         <th>Points</th>
-                        <th>Points Bonus</th>
                     </tr>
                     <g:each var="day" in="${this.daysList}">
                         <tr>
                             <td><g:link class="edit" action="show" resource="${day}">${day?.name} ${day?.dayNumber}</g:link></td>
-                            <td><g:formatNumber number="${dayScoresMap?.get(day?.dayNumber)?.points}" type="number"/> / 10</td>
-                            <td>+ <g:formatNumber number="${dayScoresMap?.get(day?.dayNumber)?.bonusPoints}" type="number"/></td>
+                            <td><g:formatNumber number="${dayScoresMap?.get(day?.dayNumber)?.points}" type="number"/></td>
                         </tr>
                     </g:each>
                 </table>

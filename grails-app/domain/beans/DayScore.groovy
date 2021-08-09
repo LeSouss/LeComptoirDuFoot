@@ -7,7 +7,8 @@ class DayScore {
     Day day
     User user
     Float points = 0
-    Float bonusPoints = 0
+    Integer nbMatchsOk = 0
+    //Float bonusPoints = 0
 
     static constraints = {
     }
@@ -19,7 +20,13 @@ class DayScore {
         user lazy: false
     }
 
+    /*
     String toString() {
         "${this.user.username} ${this.day} : ${this.points} + ${this.bonusPoints}"
+    }
+     */
+
+    String toString() {
+        "${this.user.username} ${this.day} : ${this.points}"
     }
 }

@@ -9,9 +9,9 @@ class Match {
     Boolean awayResult = false
     Boolean drawResult = false
     Boolean homeResult = false
-    Float awayQuote = 1
-    Float drawQuote = 1
-    Float homeQuote = 1
+    Float awayQuote
+    Float drawQuote
+    Float homeQuote
 
     static hasMany = [forecasts: Forecast]
 
