@@ -63,12 +63,14 @@ assets {
     minifyCss = true
 }
 
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
+task stage(dependsOn: ['war', 'clean'])
+war.mustRunAfter clean
 
 task copyToLib(type: Copy) {
     into "$buildDir/lib"
-    from(configurations.compile)
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
 }
 
 stage.dependsOn(copyToLib)
