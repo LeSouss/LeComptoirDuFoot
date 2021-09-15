@@ -30,9 +30,9 @@ class DayScoreService {
             }
              */
             Float score
-            if (it.awayBet) {
+            if (it.match.awayResult) {
                 score = it.match.awayQuote
-            } else if (it.drawBet){
+            } else if (it.match.drawResult){
                 score = it.match.drawQuote
             } else {
                 score = it.match.homeQuote
